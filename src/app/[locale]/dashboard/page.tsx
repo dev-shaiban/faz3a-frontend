@@ -5,9 +5,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { User, Mail, Phone, Shield, Calendar } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function Page() {
   const { data: user, isLoading, isError } = useUserInfo();
+  const t = useTranslations("Dashboard");
+  const locale = useLocale();
 
   if (isLoading) {
     return (
@@ -39,9 +42,9 @@ export default function Page() {
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <Card className="border-destructive">
           <CardHeader>
-            <CardTitle className="text-destructive">Error Loading User Information</CardTitle>
+            <CardTitle className="text-destructive">{t("errorTitle")}</CardTitle>
             <CardDescription>
-              Unable to fetch your profile. Please try refreshing the page.
+              {t("errorDescription")}
             </CardDescription>
           </CardHeader>
         </Card>
@@ -57,18 +60,18 @@ export default function Page() {
       {/* Welcome Header */}
       <div className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">
-          Welcome back, {user.firstName}! 👋
+          {t("welcome", { name: user.firstName ?? "" })} 👋
         </h1>
         <p className="text-muted-foreground">
-          Here&apos;s an overview of your account information
+          {t("overview")}
         </p>
       </div>
 
       {/* User Profile Card */}
       <Card>
         <CardHeader>
-          <CardTitle>Profile Information</CardTitle>
-          <CardDescription>Your account details and status</CardDescription>
+          <CardTitle>{t("profileInformation")}</CardTitle>
+          <CardDescription>{t("profileDescription")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Avatar and Name */}
@@ -88,7 +91,7 @@ export default function Page() {
             <div className="flex items-center gap-3 rounded-lg border p-4">
               <Mail className="h-5 w-5 text-muted-foreground" />
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Email</p>
+                <p className="text-sm font-medium text-muted-foreground">{t("email")}</p>
                 <p className="text-sm">{user.email}</p>
               </div>
             </div>
@@ -96,15 +99,15 @@ export default function Page() {
             <div className="flex items-center gap-3 rounded-lg border p-4">
               <Phone className="h-5 w-5 text-muted-foreground" />
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Phone</p>
-                <p className="text-sm">{user.phone || "Not provided"}</p>
+                <p className="text-sm font-medium text-muted-foreground">{t("phone")}</p>
+                <p className="text-sm">{user.phone || t("notProvided")}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3 rounded-lg border p-4">
               <Shield className="h-5 w-5 text-muted-foreground" />
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Role</p>
+                <p className="text-sm font-medium text-muted-foreground">{t("role")}</p>
                 <p className="text-sm font-semibold">{user.role?.name || "N/A"}</p>
               </div>
             </div>
@@ -112,7 +115,7 @@ export default function Page() {
             <div className="flex items-center gap-3 rounded-lg border p-4">
               <User className="h-5 w-5 text-muted-foreground" />
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Status</p>
+                <p className="text-sm font-medium text-muted-foreground">{t("status")}</p>
                 <p className="text-sm">
                   <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
                     user.status?.name === "active" 
@@ -128,13 +131,16 @@ export default function Page() {
             <div className="flex items-center gap-3 rounded-lg border p-4">
               <Calendar className="h-5 w-5 text-muted-foreground" />
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Member Since</p>
+                <p className="text-sm font-medium text-muted-foreground">{t("memberSince")}</p>
                 <p className="text-sm">
-                  {new Date(user.createdAt).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
+                  {new Date(user.createdAt).toLocaleDateString(
+                    locale === "ar" ? "ar-EG" : "en-US",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }
+                  )}
                 </p>
               </div>
             </div>
@@ -143,7 +149,7 @@ export default function Page() {
               <div className="flex items-center gap-3 rounded-lg border p-4">
                 <User className="h-5 w-5 text-muted-foreground" />
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Provider</p>
+                  <p className="text-sm font-medium text-muted-foreground">{t("provider")}</p>
                   <p className="text-sm capitalize">{user.provider}</p>
                 </div>
               </div>
@@ -156,26 +162,26 @@ export default function Page() {
       <div className="grid auto-rows-min gap-4 md:grid-cols-3">
         <Card className="bg-muted/50">
           <CardHeader>
-            <CardTitle className="text-sm font-medium">Quick Stats</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("quickStats")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">Coming Soon</p>
+            <p className="text-2xl font-bold">{t("comingSoon")}</p>
           </CardContent>
         </Card>
         <Card className="bg-muted/50">
           <CardHeader>
-            <CardTitle className="text-sm font-medium">Activity</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("activity")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">Coming Soon</p>
+            <p className="text-2xl font-bold">{t("comingSoon")}</p>
           </CardContent>
         </Card>
         <Card className="bg-muted/50">
           <CardHeader>
-            <CardTitle className="text-sm font-medium">Notifications</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("notifications")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">Coming Soon</p>
+            <p className="text-2xl font-bold">{t("comingSoon")}</p>
           </CardContent>
         </Card>
       </div>

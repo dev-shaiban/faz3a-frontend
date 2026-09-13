@@ -37,6 +37,7 @@ import { endpoints } from "@/lib/api/endpoints"
 import { removeAccessToken, removeRefreshToken } from "@/lib/utils/tokens"
 import { useRouter, usePathname } from "next/navigation"
 import { toast } from "sonner"
+import { useTranslations } from "next-intl"
 
 export function NavUser() {
   const { isMobile } = useSidebar()
@@ -44,6 +45,7 @@ export function NavUser() {
   const queryClient = useQueryClient()
   const router = useRouter()
   const pathname = usePathname()
+  const t = useTranslations("NavUser")
 
   const logoutMutation = useMutation({
     mutationFn: async () => {
@@ -59,7 +61,7 @@ export function NavUser() {
       queryClient.clear()
       
       // Show success message
-      toast.success("Logged out successfully")
+      toast.success(t("loggedOutSuccess"))
       
       // Extract locale from current path and redirect to login
       const locale = pathname.split('/')[1] || 'en'
@@ -67,7 +69,7 @@ export function NavUser() {
     },
     onError: (error) => {
       console.error("Logout failed:", error)
-      toast.error("Failed to logout. Please try again.")
+      toast.error(t("logoutFailed"))
     },
   })
 
@@ -138,7 +140,7 @@ export function NavUser() {
               disabled={logoutMutation.isPending}
             >
               <LogOut />
-              {logoutMutation.isPending ? "Logging out..." : "Log out"}
+              {logoutMutation.isPending ? t("loggingOut") : t("logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

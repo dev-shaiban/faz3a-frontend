@@ -14,6 +14,7 @@ import {
 import { NavOperations } from "@/components/nav-projects";
 import { NavUser } from "@/components/nav-user";
 import { TeamSwitcher } from "@/components/team-switcher";
+import { useTranslations } from "next-intl";
 import {
   Sidebar,
   SidebarContent,
@@ -130,22 +131,22 @@ const data = {
   // ],
   operations: [
     {
-      name: "Professionals",
+      name: "professionals",
       url: "professionals",
       icon: User,
     },
     {
-      name: "Candidates",
+      name: "candidates",
       url: "candidates",
       icon: User2,
     },
     {
-      name: "Categories",
+      name: "categories",
       url: "categories",
       icon: Hash,
     },
     {
-      name: "Governments",
+      name: "governorates",
       url: "governorates",
       icon: Map,
     },
@@ -153,6 +154,13 @@ const data = {
 };
 
 export function AppSidebar({ side = "left", ...props }: React.ComponentProps<typeof Sidebar>) {
+  const t = useTranslations("Sidebar");
+
+  const operations = data.operations.map((operation) => ({
+    ...operation,
+    name: t(operation.name),
+  }));
+
   return (
     <Sidebar collapsible="icon" side={side} {...props}>
       <SidebarHeader>
@@ -160,7 +168,7 @@ export function AppSidebar({ side = "left", ...props }: React.ComponentProps<typ
       </SidebarHeader>
       <SidebarContent>
         {/* <NavMain items={data.navMain} /> */}
-        <NavOperations operations={data.operations} />
+        <NavOperations operations={operations} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

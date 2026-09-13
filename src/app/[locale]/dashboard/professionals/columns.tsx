@@ -17,6 +17,7 @@ import { handleDeleteApiError } from "@/lib/utils/form-error-handler";
 import { Professional } from "@/types";
 import { EditProfessionalDialog } from "./EditDialog";
 import { useDeleteProfessional } from "@/hooks/data/use-professionals";
+import { useLocale, useTranslations } from "next-intl";
 
 type UseProfessionalsColumnsProps = {
   onSortChange?: (sort: string) => void;
@@ -35,6 +36,10 @@ export const useProfessionalsColumns = ({
   const [currentProfessional, setCurrentProfessional] =
     useState<Professional | null>(null);
   const { mutate: deleteProfessional, isPending } = useDeleteProfessional();
+  const t = useTranslations("Table");
+  const tCommon = useTranslations("Common");
+  const locale = useLocale();
+  const isRTL = locale === "ar";
 
   const handleDelete = (id: number) => {
     deleteProfessional(id, {
@@ -52,11 +57,11 @@ export const useProfessionalsColumns = ({
   const columns: ColumnDef<Professional>[] = [
     {
       accessorKey: "id",
-      header: "ID",
+      header: t("Columns.id"),
     },
     {
       accessorKey: "user",
-      header: "Name",
+      header: t("Columns.name"),
       cell: ({ row }) => {
         const user = row.getValue("user") as Professional['user'];
         return `${user.firstName} ${user.lastName}`;
@@ -64,40 +69,54 @@ export const useProfessionalsColumns = ({
     },
     {
       accessorKey: "user.email",
-      header: "Email",
+      header: t("Columns.email"),
+      cell: ({ row }) => (
+        <span dir="ltr" className="inline-block">
+          {(row.getValue("user.email") as string) ?? ""}
+        </span>
+      ),
     },
     {
       accessorKey: "phone",
-      header: "Phone",
+      header: t("Columns.phone"),
+      cell: ({ row }) => (
+        <span dir="ltr" className="inline-block">
+          {(row.getValue("phone") as string) || "N/A"}
+        </span>
+      ),
     },
     {
       accessorKey: "yearsOfExp",
-      header: "Experience (Years)",
+      header: t("Columns.experienceYears"),
     },
     {
       accessorKey: "governorate",
-      header: "Governorate",
+      header: t("Columns.governorate"),
       cell: ({ row }) => {
         const governorate = row.getValue("governorate") as Professional['governorate'];
-        return governorate?.name || 'N/A';
+        return (isRTL ? governorate?.nameAr || governorate?.name : governorate?.name) || 'N/A';
       },
     },
     {
       accessorKey: "categories",
-      header: "Categories",
+      header: t("Columns.categories"),
       cell: ({ row }) => {
         const categories = row.getValue("categories") as Professional['categories'];
-        return categories.map(c => c.name).join(', ') || 'N/A';
+        return (
+          categories
+            .map((c) => (isRTL ? c.nameAr || c.name : c.nameEn || c.name))
+            .join("، ") || "N/A"
+        );
       },
     },
     {
       accessorKey: "isActive",
-      header: "Status",
+      header: t("Columns.status"),
       cell: ({ row }) => {
         const isActive = row.getValue("isActive");
         return (
           <span className={isActive ? "text-green-500" : "text-red-500"}>
-            {isActive ? "Active" : "Inactive"}
+            {isActive ? tCommon("active") : tCommon("inactive")}
           </span>
         );
       },
@@ -113,14 +132,14 @@ export const useProfessionalsColumns = ({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("Actions.label")}</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={() => {
                   setCurrentProfessional(row.original);
                   setIsEditOpen(true);
                 }}
               >
-                Edit
+                {t("Actions.edit")}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
@@ -129,7 +148,7 @@ export const useProfessionalsColumns = ({
                 }}
                 className="text-red-600"
               >
-                Delete
+                {t("Actions.delete")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

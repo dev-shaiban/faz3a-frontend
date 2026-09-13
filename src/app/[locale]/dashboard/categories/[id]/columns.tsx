@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { DeleteConfirmationDialog } from "@/components/ui/delete-confirmation-dialog";
 import { handleDeleteApiError } from "@/lib/utils/form-error-handler";
 import { SubCategory } from "@/types/api.types";
+import { useTranslations } from "next-intl";
 
 type UseSubCategoryColumnsProps = {
   onSortChange?: (sort: string) => void;
@@ -38,6 +39,8 @@ export const useSubCategoryColumns = ({
     null
   );
   const { mutate: deleteCategory, isPending } = useDeleteCategory(true, Number(parentId));
+  const t = useTranslations("Table");
+  const tCommon = useTranslations("Common");
 
   const handleDelete = (id: number) => {
     deleteCategory(id, {
@@ -53,7 +56,7 @@ export const useSubCategoryColumns = ({
   const columns: ColumnDef<SubCategory>[] = [
     {
       accessorKey: "id",
-      header: "ID",
+      header: t("Columns.id"),
     },
     {
       accessorKey: "name",
@@ -68,15 +71,15 @@ export const useSubCategoryColumns = ({
               column.toggleSorting(column.getIsSorted() === "asc");
             }}
           >
-            Name
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            {t("Columns.name")}
+            <ArrowUpDown className="ml-2 h-4 w-4 rtl:rotate-180" />
           </Button>
         );
       },
     },
     {
       accessorKey: "type",
-      header: "Type",
+      header: t("Columns.type"),
       cell: ({ row }) => {
         const type = row.getValue("type") as string;
         return <span className="capitalize">{type.toLowerCase()}</span>;
@@ -84,12 +87,12 @@ export const useSubCategoryColumns = ({
     },
     {
       accessorKey: "isActive",
-      header: "Status",
+      header: t("Columns.status"),
       cell: ({ row }) => {
         const isActive = row.getValue("isActive");
         return (
           <span className={isActive ? "text-green-500" : "text-red-500"}>
-            {isActive ? "Active" : "Inactive"}
+            {isActive ? tCommon("active") : tCommon("inactive")}
           </span>
         );
       },
@@ -106,14 +109,14 @@ export const useSubCategoryColumns = ({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("Actions.label")}</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={() => {
                   setCurrentCategory(row.original); // Use fresh row data
                   setIsEditOpen(true);
                 }}
               >
-                Edit
+                {t("Actions.edit")}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
@@ -122,7 +125,7 @@ export const useSubCategoryColumns = ({
                 }}
                 className="text-red-600"
               >
-                Delete
+                {t("Actions.delete")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

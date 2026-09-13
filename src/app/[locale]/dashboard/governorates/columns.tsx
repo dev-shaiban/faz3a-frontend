@@ -2,6 +2,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import type { Governorate } from "@/types/domain.types";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useLocale } from "next-intl";
 
 import CellText from "@/components/table/cell-text";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +11,9 @@ import { useUpdateGovernorateStatus } from "@/hooks/data/use-governorates";
 
 export const useGovernorateColumns = () => {
   const t = useTranslations("Governorates.Table");
+  const tCommon = useTranslations("Common");
+  const locale = useLocale();
+  const isRTL = locale === "ar";
   const updateStatusMutation = useUpdateGovernorateStatus();
 //   const [isEditOpen, setIsEditOpen] = useState(false);
 //   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -46,7 +50,13 @@ export const useGovernorateColumns = () => {
     {
       accessorKey: "name",
       header: t("Columns.name"),
-      cell: ({ row }) => <CellText>{row.getValue("name")}</CellText>,
+      cell: ({ row }) => {
+        const governorate = row.original;
+        const displayName = isRTL
+          ? governorate.nameAr || governorate.name
+          : governorate.name;
+        return <CellText>{displayName}</CellText>;
+      },
     },
     {
       accessorKey: "isActive",
@@ -72,7 +82,7 @@ export const useGovernorateColumns = () => {
                   : "bg-green-200 text-green-800"
               }
             >
-              <CellText>{isActive ? "active" : "inactive"}</CellText>
+              <CellText>{isActive ? tCommon("active") : tCommon("inactive")}</CellText>
             </Badge>
           </div>
         );

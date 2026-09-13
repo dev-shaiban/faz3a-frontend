@@ -20,6 +20,7 @@ import { TablePagination } from "@/components/table/table-pagination";
 import { LoadingComponent } from "@/components/table/loading-table";
 import { useGovernorates } from "@/hooks/data/use-governorates";
 import { useGovernorateColumns } from "./columns";
+import { useTranslations } from "next-intl";
 
 type DataTableProps = {
   searchQuery?: string;
@@ -30,6 +31,7 @@ export function DataTable({ searchQuery = "" }: DataTableProps) {
     pageIndex: 0, // TanStack Table uses 0-based index
     pageSize: 10,
   });
+  const t = useTranslations("Common");
 
   // Only pass search param if it's not empty to avoid unnecessary API calls
   const searchParams = searchQuery.trim() ? { search: searchQuery.trim() } : {};
@@ -57,9 +59,9 @@ export function DataTable({ searchQuery = "" }: DataTableProps) {
 
   const getNoResultsMessage = () => {
     if (searchQuery.trim()) {
-      return "لا توجد نتائج للبحث.";
+      return t("noResults");
     }
-    return "لا توجد بيانات.";
+    return t("noData");
   };
 
   return (

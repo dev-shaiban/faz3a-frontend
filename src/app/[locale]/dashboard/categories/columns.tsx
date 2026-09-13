@@ -19,6 +19,7 @@ import { useDeleteCategory } from "@/hooks/data/use-categories";
 import { toast } from "sonner";
 import { DeleteConfirmationDialog } from "@/components/ui/delete-confirmation-dialog";
 import { handleDeleteApiError } from "@/lib/utils/form-error-handler";
+import { useTranslations } from "next-intl";
 
 type UseCategoryColumnsProps = {
   onSortChange?: (sort: string) => void;
@@ -29,6 +30,7 @@ const ActionsCell = ({ category }: { category: MainCategory }) => {
   const [isEditOpen, setIsEditOpen] = React.useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = React.useState(false);
   const { mutate: deleteCategory, isPending } = useDeleteCategory();
+  const t = useTranslations("Table");
 
   const handleDelete = () => {
     deleteCategory(category.id, {
@@ -59,15 +61,15 @@ const ActionsCell = ({ category }: { category: MainCategory }) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuLabel>{t("Actions.label")}</DropdownMenuLabel>
           <DropdownMenuItem onClick={() => setIsEditOpen(true)}>
-            Edit
+            {t("Actions.edit")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setIsDeleteOpen(true)}
             className="text-red-600"
           >
-            Delete
+            {t("Actions.delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -90,6 +92,8 @@ const ActionsCell = ({ category }: { category: MainCategory }) => {
 export const useCategoryColumns = ({
   onSortChange,
 }: UseCategoryColumnsProps = {}) => {
+  const t = useTranslations("Table");
+  const tCommon = useTranslations("Common");
   const columns: ColumnDef<MainCategory>[] = [
     {
       id: "select",
@@ -112,7 +116,7 @@ export const useCategoryColumns = ({
     },
     {
       accessorKey: "id",
-      header: "ID",
+      header: t("Columns.id"),
     },
     {
       accessorKey: "name",
@@ -127,21 +131,21 @@ export const useCategoryColumns = ({
               column.toggleSorting(column.getIsSorted() === "asc");
             }}
           >
-            Name
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            {t("Columns.name")}
+            <ArrowUpDown className="ml-2 h-4 w-4 rtl:rotate-180" />
           </Button>
         );
       },
     },
     {
       accessorKey: "type",
-      header: "Type",
+      header: t("Columns.type"),
     },
     {
       accessorKey: "isActive",
-      header: "Status",
+      header: t("Columns.status"),
       cell: ({ row }) => {
-        return row.getValue("isActive") ? "Active" : "Inactive";
+        return row.getValue("isActive") ? tCommon("active") : tCommon("inactive");
       },
     },
     {

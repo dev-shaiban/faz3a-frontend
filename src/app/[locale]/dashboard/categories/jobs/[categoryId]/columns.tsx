@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { DeleteConfirmationDialog } from "@/components/ui/delete-confirmation-dialog";
 import { handleDeleteApiError } from "@/lib/utils/form-error-handler";
 import EditDepartmentDialog from "./EditDepartmentDialog";
+import { useTranslations } from "next-intl";
 
 type UseDepartmentColumnsProps = {
   onSortChange?: (sort: string) => void;
@@ -30,6 +31,7 @@ const DepartmentActionsCell = ({ department, parentId }: { department: SubCatego
   const [isEditOpen, setIsEditOpen] = React.useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = React.useState(false);
   const { mutate: deleteCategory, isPending } = useDeleteCategory(true, parentId);
+  const t = useTranslations("Table");
 
   const handleDelete = () => {
     deleteCategory(department.id, {
@@ -61,15 +63,15 @@ const DepartmentActionsCell = ({ department, parentId }: { department: SubCatego
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuLabel>{t("Actions.label")}</DropdownMenuLabel>
           <DropdownMenuItem onClick={() => setIsEditOpen(true)}>
-            Edit
+            {t("Actions.edit")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setIsDeleteOpen(true)}
             className="text-red-600"
           >
-            Delete
+            {t("Actions.delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -94,6 +96,8 @@ export const useDepartmentColumns = ({
   onSortChange,
   parentId,
 }: UseDepartmentColumnsProps) => {
+  const t = useTranslations("Table");
+  const tCommon = useTranslations("Common");
   const columns: ColumnDef<SubCategory>[] = [
     {
       id: "select",
@@ -116,11 +120,11 @@ export const useDepartmentColumns = ({
     },
     {
       accessorKey: "id",
-      header: "ID",
+      header: t("Columns.id"),
     },
     {
       accessorKey: "nameAr",
-      header: "Arabic Name",
+      header: t("Columns.arabicName"),
       cell: ({ row }) => {
         return <div className="font-medium">{row.getValue("nameAr")}</div>;
       },
@@ -138,15 +142,15 @@ export const useDepartmentColumns = ({
               column.toggleSorting(column.getIsSorted() === "asc");
             }}
           >
-            English Name
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            {t("Columns.englishName")}
+            <ArrowUpDown className="ml-2 h-4 w-4 rtl:rotate-180" />
           </Button>
         );
       },
     },
     {
       accessorKey: "_count",
-      header: "Job Positions",
+      header: t("Columns.jobPositions"),
       cell: ({ row }) => {
         const count = row.original._count;
         return <div className="text-center">{count?.candidates || 0}</div>;
@@ -154,7 +158,7 @@ export const useDepartmentColumns = ({
     },
     {
       accessorKey: "isActive",
-      header: "Status",
+      header: t("Columns.status"),
       cell: ({ row }) => {
         const isActive = row.getValue("isActive");
         return (
@@ -165,14 +169,14 @@ export const useDepartmentColumns = ({
                 : "bg-red-100 text-red-800"
             }`}
           >
-            {isActive ? "Active" : "Inactive"}
+            {isActive ? tCommon("active") : tCommon("inactive")}
           </span>
         );
       },
     },
     {
       id: "actions",
-      header: "Actions",
+      header: t("Columns.actions"),
       cell: ({ row }) => <DepartmentActionsCell department={row.original} parentId={parentId} />,
     },
   ];

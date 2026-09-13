@@ -10,12 +10,14 @@ import { ServicesDataTable } from "./ServicesDataTable";
 import CreateServiceDialog from "./CreateServiceDialog";
 import { useCategory } from "@/hooks/data/use-categories";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTranslations } from "next-intl";
 
 export default function ProfessionalServicesPage() {
   const params = useParams();
   const categoryId = parseInt(params.categoryId as string);
   const [searchQuery, setSearchQuery] = useState("");
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const t = useTranslations("Categories");
 
   const { data: category, isLoading } = useCategory(categoryId);
 
@@ -43,12 +45,12 @@ export default function ProfessionalServicesPage() {
         <div className="flex items-center space-x-4">
           <Button variant="ghost" size="sm" asChild>
             <Link href="/dashboard/categories/professionals">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Professional Categories
+              <ArrowLeft className="h-4 w-4 mr-2 rtl:rotate-180" />
+              {t("backToProfessionalCategories")}
             </Link>
           </Button>
           <div>
-            <h1 className="text-3xl font-bold">Services</h1>
+            <h1 className="text-3xl font-bold">{t("services")}</h1>
             <p className="text-muted-foreground">
               {category?.nameAr} - {category?.nameEn}
             </p>
@@ -56,7 +58,7 @@ export default function ProfessionalServicesPage() {
         </div>
         <Button onClick={() => setIsCreateDialogOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
-          Create New Service
+          {t("createNewService")}
         </Button>
       </header>
 
@@ -70,7 +72,7 @@ export default function ProfessionalServicesPage() {
       <div className="mt-6 space-y-4">
         <div className="flex items-center justify-between gap-4">
           <SearchInput
-            placeholder="Search services..."
+            placeholder={t("searchServices")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onClear={() => setSearchQuery("")}

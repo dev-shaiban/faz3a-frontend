@@ -17,6 +17,7 @@ import { handleDeleteApiError } from "@/lib/utils/form-error-handler";
 import { Candidate, Professional } from "@/types";
 import { useDeleteCandidate } from "@/hooks/data/use-candidate";
 import { EditCandidateDialog } from "./EditDialog";
+import { useLocale, useTranslations } from "next-intl";
 
 type UseCandidatesColumnsProps = {
   onSortChange?: (sort: string) => void;
@@ -35,6 +36,10 @@ export const useCandidatesColumns = ({
   const [currentCandidate, setCurrentCandidate] =
     useState<Candidate | null>(null);
   const { mutate: deleteCandidate, isPending } = useDeleteCandidate();
+  const t = useTranslations("Table");
+  const tCommon = useTranslations("Common");
+  const locale = useLocale();
+  const isRTL = locale === "ar";
 
   const handleDelete = (id: number) => {
     deleteCandidate(id, {
@@ -52,11 +57,11 @@ export const useCandidatesColumns = ({
   const columns: ColumnDef<Candidate>[] = [
     {
       accessorKey: "id",
-      header: "ID",
+      header: t("Columns.id"),
     },
     {
       accessorKey: "user",
-      header: "Name",
+      header: t("Columns.name"),
       cell: ({ row }) => {
         const user = row.getValue("user") as Candidate["user"];
         return `${user.firstName} ${user.lastName}`;
@@ -64,44 +69,58 @@ export const useCandidatesColumns = ({
     },
     {
       accessorKey: "user.email",
-      header: "Email",
+      header: t("Columns.email"),
+      cell: ({ row }) => (
+        <span dir="ltr" className="inline-block">
+          {(row.getValue("user.email") as string) ?? ""}
+        </span>
+      ),
     },
     {
       accessorKey: "phone",
-      header: "Phone",
+      header: t("Columns.phone"),
+      cell: ({ row }) => (
+        <span dir="ltr" className="inline-block">
+          {(row.getValue("phone") as string) || "N/A"}
+        </span>
+      ),
     },
     {
       accessorKey: "yearsOfExp",
-      header: "Experience (Years)",
+      header: t("Columns.experienceYears"),
     },
     {
       accessorKey: "governorate",
-      header: "Governorate",
+      header: t("Columns.governorate"),
       cell: ({ row }) => {
         const governorate = row.getValue(
           "governorate"
         ) as Professional["governorate"];
-        return governorate?.name || "N/A";
+        return (isRTL ? governorate?.nameAr || governorate?.name : governorate?.name) || "N/A";
       },
     },
     {
       accessorKey: "categories",
-      header: "Categories",
+      header: t("Columns.categories"),
       cell: ({ row }) => {
         const categories = row.getValue(
           "categories"
         ) as Professional["categories"];
-        return categories.map((c) => c.name).join(", ") || "N/A";
+        return (
+          categories
+            .map((c) => (isRTL ? c.nameAr || c.name : c.nameEn || c.name))
+            .join("، ") || "N/A"
+        );
       },
     },
     {
       accessorKey: "isActive",
-      header: "Status",
+      header: t("Columns.status"),
       cell: ({ row }) => {
         const isActive = row.getValue("isActive");
         return (
           <span className={isActive ? "text-green-500" : "text-red-500"}>
-            {isActive ? "Active" : "Inactive"}
+            {isActive ? tCommon("active") : tCommon("inactive")}
           </span>
         );
       },
@@ -117,14 +136,14 @@ export const useCandidatesColumns = ({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("Actions.label")}</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={() => {
                   setCurrentCandidate(row.original);
                   setIsEditOpen(true);
                 }}
               >
-                Edit
+                {t("Actions.edit")}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
@@ -133,7 +152,7 @@ export const useCandidatesColumns = ({
                 }}
                 className="text-red-600"
               >
-                Delete
+                {t("Actions.delete")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -21,6 +21,7 @@ import { LoadingComponent } from "@/components/table/loading-table";
 import { useCandidatesColumns } from "./columns";
 import { Candidate } from "@/types";
 import { useCandidates } from "@/hooks/data/use-candidate";
+import { useTranslations } from "next-intl";
 
 
 type CandidatesDataTableProps = {
@@ -38,6 +39,7 @@ export function CandidatesDataTable({
   const [sorting, setSorting] = useState<
     "name:asc" | "name:desc" | "createdAt:asc" | "createdAt:desc"
   >("createdAt:desc");
+  const t = useTranslations("Common");
 
   const { candidates, totalPages, isLoading, totalItems, isFetching } =
     useCandidates({
@@ -65,9 +67,9 @@ export function CandidatesDataTable({
 
   const getNoResultsMessage = () => {
     if (searchQuery.trim()) {
-      return "No results found.";
+      return t("noResults");
     }
-    return "No data available.";
+    return t("noData");
   };
 
   return (

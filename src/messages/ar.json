@@ -2,5 +2,158 @@
   "Index": {
     "title": "مرحبًا بك في التطبيق",
     "description": "هذا تطبيق بلغتين"
+  },
+  "Common": {
+    "createNew": "إنشاء جديد",
+    "noResults": "لا توجد نتائج للبحث.",
+    "noData": "لا توجد بيانات.",
+    "active": "نشط",
+    "inactive": "غير نشط"
+  },
+  "TablePagination": {
+    "page": "صفحة",
+    "of": "من",
+    "rowsPerPage": "صفوف لكل صفحة"
+  },
+  "Table": {
+    "Columns": {
+      "id": "المعرف",
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "phone": "الهاتف",
+      "experienceYears": "سنوات الخبرة",
+      "governorate": "المحافظة",
+      "categories": "الفئات",
+      "status": "الحالة",
+      "type": "النوع",
+      "arabicName": "الاسم بالعربية",
+      "englishName": "الاسم بالإنجليزية",
+      "departments": "الأقسام",
+      "jobPositions": "الوظائف",
+      "services": "الخدمات",
+      "professionals": "المحترفون",
+      "candidates": "المرشحون",
+      "actions": "الإجراءات"
+    },
+    "Actions": {
+      "label": "الإجراءات",
+      "edit": "تعديل",
+      "delete": "حذف"
+    }
+  },
+  "Sidebar": {
+    "mainOperations": "العمليات الرئيسية",
+    "professionals": "المحترفون",
+    "candidates": "المرشحون",
+    "categories": "الفئات",
+    "governorates": "المحافظات"
+  },
+  "Breadcrumb": {
+    "dashboard": "لوحة التحكم",
+    "professionals": "المحترفون",
+    "candidates": "المرشحون",
+    "categories": "الفئات",
+    "governorates": "المحافظات",
+    "jobs": "الوظائف",
+    "overview": "نظرة عامة"
+  },
+  "Dashboard": {
+    "welcome": "مرحبًا بعودتك، {name}!",
+    "overview": "إليك نظرة عامة على معلومات حسابك",
+    "profileInformation": "معلومات الملف الشخصي",
+    "profileDescription": "تفاصيل حسابك وحالته",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "role": "الدور",
+    "status": "الحالة",
+    "memberSince": "عضو منذ",
+    "provider": "مزود الخدمة",
+    "notProvided": "غير متوفر",
+    "quickStats": "إحصائيات سريعة",
+    "activity": "النشاط",
+    "notifications": "الإشعارات",
+    "comingSoon": "قريبًا",
+    "errorTitle": "خطأ في تحميل معلومات المستخدم",
+    "errorDescription": "تعذر جلب ملفك الشخصي. يرجى تحديث الصفحة والمحاولة مرة أخرى."
+  },
+  "Governorates": {
+    "title": "المحافظات",
+    "searchPlaceholder": "ابحث عن محافظة...",
+    "Table": {
+      "Columns": {
+        "id": "المعرف",
+        "name": "الاسم",
+        "status": "الحالة",
+        "actions": "الإجراءات"
+      }
+    }
+  },
+  "Professionals": {
+    "title": "المحترفون",
+    "searchPlaceholder": "ابحث عن محترف..."
+  },
+  "Candidates": {
+    "title": "المرشحون",
+    "searchPlaceholder": "ابحث عن مرشح..."
+  },
+  "Categories": {
+    "title": "إدارة الفئات",
+    "description": "إدارة فئات الوظائف وفئات الخدمات المهنية",
+    "backToCategories": "العودة إلى الفئات",
+    "jobCategories": "فئات الوظائف",
+    "jobCategoriesSubtitle": "المجالات الرئيسية للوظائف",
+    "jobCategoriesHierarchy": "تسلسل من 3 مستويات: المجال ← القسم ← اسم الوظيفة",
+    "jobCategoriesDescription": "إدارة فئات الوظائف مع المجالات الرئيسية والأقسام والوظائف المحددة.",
+    "searchJobCategories": "ابحث في فئات الوظائف...",
+    "createNewField": "إنشاء مجال جديد",
+    "departments": "الأقسام",
+    "searchDepartments": "ابحث عن قسم...",
+    "createNewDepartment": "إنشاء قسم جديد",
+    "backToJobCategories": "العودة إلى فئات الوظائف",
+    "backToDepartments": "العودة إلى الأقسام",
+    "jobPositionsTitle": "الوظائف",
+    "searchJobPositions": "ابحث عن وظيفة...",
+    "createNewJobPosition": "إنشاء وظيفة جديدة",
+    "services": "الخدمات",
+    "searchServices": "ابحث عن خدمة...",
+    "createNewService": "إنشاء خدمة جديدة",
+    "backToProfessionalCategories": "العودة إلى فئات الخدمات",
+    "backToServices": "العودة إلى الخدمات",
+    "subServices": "الخدمات الفرعية",
+    "searchSubServices": "ابحث عن خدمة فرعية...",
+    "createNewSubService": "إنشاء خدمة فرعية جديدة",
+    "subcategories": "الفئات الفرعية",
+    "searchSubcategories": "ابحث في الفئات الفرعية...",
+    "professionalServices": "الخدمات المهنية",
+    "professionalServicesSubtitle": "فئات الخدمات الرئيسية",
+    "professionalServicesHierarchy": "تسلسل من مستويين: الفئة الرئيسية ← الخدمة",
+    "professionalServicesDescription": "إدارة فئات الخدمات المهنية وفئاتها الفرعية.",
+    "searchProfessionalCategories": "ابحث في فئات الخدمات...",
+    "createNewCategory": "إنشاء فئة جديدة",
+    "structure": "البنية:",
+    "jobsStructure": "10 فئات رئيسية ← 16 قسمًا ← أكثر من 53 وظيفة",
+    "servicesStructure": "الفئات الرئيسية ← الخدمات",
+    "manageJobs": "إدارة الوظائف",
+    "manageServices": "إدارة الخدمات",
+    "jobMainCategories": "الفئات الرئيسية للوظائف",
+    "jobDepartments": "أقسام الوظائف",
+    "jobPositions": "الوظائف",
+    "serviceCategories": "فئات الخدمات"
+  },
+  "NavUser": {
+    "logout": "تسجيل الخروج",
+    "loggingOut": "جارٍ تسجيل الخروج...",
+    "loggedOutSuccess": "تم تسجيل الخروج بنجاح",
+    "logoutFailed": "فشل تسجيل الخروج. يرجى المحاولة مرة أخرى."
+  },
+  "Login": {
+    "title": "تسجيل الدخول إلى حسابك",
+    "description": "أدخل بريدك الإلكتروني أدناه لتسجيل الدخول إلى حسابك",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "login": "تسجيل الدخول",
+    "loggingIn": "جارٍ تسجيل الدخول...",
+    "invalidEmail": "البريد الإلكتروني غير صالح",
+    "passwordMin": "يجب أن تكون كلمة المرور 6 أحرف على الأقل"
   }
 }

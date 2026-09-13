@@ -12,6 +12,7 @@ import { ILoginPayload } from "@/services/auth.service"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { setAccessToken, setRefreshToken } from "@/lib/utils/tokens";
 import { redirect, useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -30,6 +31,7 @@ export function LoginForm({
     resolver: zodResolver(loginSchema)
   })
   const router = useRouter();
+  const t = useTranslations("Login");
 
 
   const mutation = useMutation({
@@ -55,14 +57,14 @@ export function LoginForm({
       {...props}
     >
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold">Login to your account</h1>
+        <h1 className="text-2xl font-bold">{t("title")}</h1>
         <p className="text-muted-foreground text-sm text-balance">
-          Enter your email below to login to your account
+          {t("description")}
         </p>
       </div>
       <div className="grid gap-6">
         <div className="grid gap-3">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email">{t("email")}</Label>
           <Input 
             id="email" 
             type="email" 
@@ -75,7 +77,7 @@ export function LoginForm({
         </div>
         <div className="grid gap-3">
           <div className="flex items-center">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t("password")}</Label>
           </div>
           <Input 
             id="password" 
@@ -87,7 +89,7 @@ export function LoginForm({
           )}
         </div>
         <Button type="submit" className="w-full" disabled={mutation.isPending}>
-          {mutation.isPending ? "Logging in..." : "Login"}
+          {mutation.isPending ? t("loggingIn") : t("login")}
         </Button>
       </div>
     </form>

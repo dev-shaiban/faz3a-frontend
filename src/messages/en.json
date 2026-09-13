@@ -3,12 +3,82 @@
     "title": "Welcome to the app",
     "description": "This is a bilingual app"
   },
+  "Common": {
+    "createNew": "Create New",
+    "noResults": "No results found.",
+    "noData": "No data available.",
+    "active": "active",
+    "inactive": "inactive"
+  },
   "TablePagination": {
     "page": "Page",
     "of": "of",
     "rowsPerPage": "Rows per page"
   },
+  "Table": {
+    "Columns": {
+      "id": "ID",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "experienceYears": "Experience (Years)",
+      "governorate": "Governorate",
+      "categories": "Categories",
+      "status": "Status",
+      "type": "Type",
+      "arabicName": "Arabic Name",
+      "englishName": "English Name",
+      "departments": "Departments",
+      "jobPositions": "Job Positions",
+      "services": "Services",
+      "professionals": "Professionals",
+      "candidates": "Candidates",
+      "actions": "Actions"
+    },
+    "Actions": {
+      "label": "Actions",
+      "edit": "Edit",
+      "delete": "Delete"
+    }
+  },
+  "Sidebar": {
+    "mainOperations": "Main Operations",
+    "professionals": "Professionals",
+    "candidates": "Candidates",
+    "categories": "Categories",
+    "governorates": "Governorates"
+  },
+  "Breadcrumb": {
+    "dashboard": "Dashboard",
+    "professionals": "Professionals",
+    "candidates": "Candidates",
+    "categories": "Categories",
+    "governorates": "Governorates",
+    "jobs": "Jobs",
+    "overview": "Overview"
+  },
+  "Dashboard": {
+    "welcome": "Welcome back, {name}!",
+    "overview": "Here's an overview of your account information",
+    "profileInformation": "Profile Information",
+    "profileDescription": "Your account details and status",
+    "email": "Email",
+    "phone": "Phone",
+    "role": "Role",
+    "status": "Status",
+    "memberSince": "Member Since",
+    "provider": "Provider",
+    "notProvided": "Not provided",
+    "quickStats": "Quick Stats",
+    "activity": "Activity",
+    "notifications": "Notifications",
+    "comingSoon": "Coming Soon",
+    "errorTitle": "Error Loading User Information",
+    "errorDescription": "Unable to fetch your profile. Please try refreshing the page."
+  },
   "Governorates": {
+    "title": "Governorates",
+    "searchPlaceholder": "Search governorates...",
     "Table": {
       "Columns": {
         "id": "Id",
@@ -17,5 +87,73 @@
         "actions": "Actions"
       }
     }
+  },
+  "Professionals": {
+    "title": "Professionals",
+    "searchPlaceholder": "Search professionals..."
+  },
+  "Candidates": {
+    "title": "Candidates",
+    "searchPlaceholder": "Search candidates..."
+  },
+  "Categories": {
+    "title": "Categories Management",
+    "description": "Manage job categories and professional service categories",
+    "backToCategories": "Back to Categories",
+    "jobCategories": "Job Categories",
+    "jobCategoriesSubtitle": "Main job fields",
+    "jobCategoriesHierarchy": "3-level hierarchy: Field → Department → Job Name",
+    "jobCategoriesDescription": "Manage job categories with main fields, departments, and specific job positions.",
+    "searchJobCategories": "Search job categories...",
+    "createNewField": "Create New Field",
+    "departments": "Departments",
+    "searchDepartments": "Search departments...",
+    "createNewDepartment": "Create New Department",
+    "backToJobCategories": "Back to Job Categories",
+    "backToDepartments": "Back to Departments",
+    "jobPositionsTitle": "Job Positions",
+    "searchJobPositions": "Search job positions...",
+    "createNewJobPosition": "Create New Job Position",
+    "services": "Services",
+    "searchServices": "Search services...",
+    "createNewService": "Create New Service",
+    "backToProfessionalCategories": "Back to Professional Categories",
+    "backToServices": "Back to Services",
+    "subServices": "Sub-Services",
+    "searchSubServices": "Search sub-services...",
+    "createNewSubService": "Create New Sub-Service",
+    "subcategories": "Subcategories",
+    "searchSubcategories": "Search subcategories...",
+    "professionalServices": "Professional Services",
+    "professionalServicesSubtitle": "Main service categories",
+    "professionalServicesHierarchy": "2-level hierarchy: Main Category → Service",
+    "professionalServicesDescription": "Manage professional service categories and their subcategories.",
+    "searchProfessionalCategories": "Search professional categories...",
+    "createNewCategory": "Create New Category",
+    "structure": "Structure:",
+    "jobsStructure": "10 Main Categories → 16 Departments → 53+ Job Positions",
+    "servicesStructure": "Main Categories → Services",
+    "manageJobs": "Manage Jobs",
+    "manageServices": "Manage Services",
+    "jobMainCategories": "Job Main Categories",
+    "jobDepartments": "Job Departments",
+    "jobPositions": "Job Positions",
+    "serviceCategories": "Service Categories"
+  },
+  "NavUser": {
+    "logout": "Log out",
+    "loggingOut": "Logging out...",
+    "loggedOutSuccess": "Logged out successfully",
+    "logoutFailed": "Failed to logout. Please try again."
+  },
+  "Login": {
+    "title": "Login to your account",
+    "description": "Enter your email below to login to your account",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "loggingIn": "Logging in...",
+    "invalidEmail": "Invalid email address",
+    "passwordMin": "Password must be at least 6 characters"
   }
 }

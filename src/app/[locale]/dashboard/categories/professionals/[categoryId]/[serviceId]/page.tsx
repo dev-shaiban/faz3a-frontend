@@ -10,6 +10,7 @@ import { useCategory } from "@/hooks/data/use-categories";
 import { Skeleton } from "@/components/ui/skeleton";
 import CreateSubServiceDialog from "./CreateSubServiceDialog";
 import { SubServicesDataTable } from "./SubServicesDataTable";
+import { useTranslations } from "next-intl";
 
 export default function SubServicesPage() {
   const params = useParams();
@@ -17,6 +18,7 @@ export default function SubServicesPage() {
   const serviceId = parseInt(params.serviceId as string);
   const [searchQuery, setSearchQuery] = useState("");
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const t = useTranslations("Categories");
 
   const { data: service, isLoading } = useCategory(serviceId);
   const { data: mainCategory } = useCategory(categoryId);
@@ -45,12 +47,12 @@ export default function SubServicesPage() {
         <div className="flex items-center space-x-4">
           <Button variant="ghost" size="sm" asChild>
             <Link href={`/dashboard/categories/professionals/${categoryId}`}>
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Services
+              <ArrowLeft className="h-4 w-4 mr-2 rtl:rotate-180" />
+              {t("backToServices")}
             </Link>
           </Button>
           <div>
-            <h1 className="text-3xl font-bold">Sub-Services</h1>
+            <h1 className="text-3xl font-bold">{t("subServices")}</h1>
             <p className="text-muted-foreground">
               {mainCategory?.nameAr} → {service?.nameAr} - {service?.nameEn}
             </p>
@@ -58,7 +60,7 @@ export default function SubServicesPage() {
         </div>
         <Button onClick={() => setIsCreateDialogOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
-          Create New Sub-Service
+          {t("createNewSubService")}
         </Button>
       </header>
 
@@ -73,7 +75,7 @@ export default function SubServicesPage() {
       <div className="mt-6 space-y-4">
         <div className="flex items-center justify-between gap-4">
           <SearchInput
-            placeholder="Search sub-services..."
+            placeholder={t("searchSubServices")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onClear={() => setSearchQuery("")}

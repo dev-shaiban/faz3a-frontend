@@ -20,6 +20,7 @@ import { TablePagination } from "@/components/table/table-pagination";
 import { LoadingComponent } from "@/components/table/loading-table";
 import { useSubCategoryColumns } from "./columns";
 import { useSubCategories } from "@/hooks/data/use-categories";
+import { useTranslations } from "next-intl";
 
 type SubCategoriesDataTableProps = {
   parentId: number;
@@ -34,6 +35,7 @@ export function SubCategoriesDataTable({
     pageIndex: 0,
     pageSize: 10,
   });
+  const t = useTranslations("Common");
 
   const [sorting, setSorting] = useState<
     "name:asc" | "name:desc" | "createdAt:asc" | "createdAt:desc"
@@ -66,9 +68,9 @@ export function SubCategoriesDataTable({
 
   const getNoResultsMessage = () => {
     if (searchQuery.trim()) {
-      return "No results found.";
+      return t("noResults");
     }
-    return "No data available.";
+    return t("noData");
   };
 
   return (

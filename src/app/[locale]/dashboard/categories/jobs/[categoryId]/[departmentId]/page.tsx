@@ -10,6 +10,7 @@ import { useCategory } from "@/hooks/data/use-categories";
 import { Skeleton } from "@/components/ui/skeleton";
 import CreateJobPositionDialog from "./CreateJobPositionDialog";
 import { JobPositionsDataTable } from "./JobPositionsDataTable";
+import { useTranslations } from "next-intl";
 
 export default function JobPositionsPage() {
   const params = useParams();
@@ -17,6 +18,7 @@ export default function JobPositionsPage() {
   const departmentId = parseInt(params.departmentId as string);
   const [searchQuery, setSearchQuery] = useState("");
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const t = useTranslations("Categories");
 
   const { data: department, isLoading } = useCategory(departmentId);
   const { data: mainCategory } = useCategory(categoryId);
@@ -45,12 +47,12 @@ export default function JobPositionsPage() {
         <div className="flex items-center space-x-4">
           <Button variant="ghost" size="sm" asChild>
             <Link href={`/dashboard/categories/jobs/${categoryId}`}>
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Departments
+              <ArrowLeft className="h-4 w-4 mr-2 rtl:rotate-180" />
+              {t("backToDepartments")}
             </Link>
           </Button>
           <div>
-            <h1 className="text-3xl font-bold">Job Positions</h1>
+            <h1 className="text-3xl font-bold">{t("jobPositionsTitle")}</h1>
             <p className="text-muted-foreground">
               {mainCategory?.nameAr} → {department?.nameAr} - {department?.nameEn}
             </p>
@@ -58,7 +60,7 @@ export default function JobPositionsPage() {
         </div>
         <Button onClick={() => setIsCreateDialogOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
-          Create New Job Position
+          {t("createNewJobPosition")}
         </Button>
       </header>
 
@@ -73,7 +75,7 @@ export default function JobPositionsPage() {
       <div className="mt-6 space-y-4">
         <div className="flex items-center justify-between gap-4">
           <SearchInput
-            placeholder="Search job positions..."
+            placeholder={t("searchJobPositions")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onClear={() => setSearchQuery("")}

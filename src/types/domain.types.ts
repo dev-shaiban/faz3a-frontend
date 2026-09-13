@@ -34,12 +34,15 @@ export interface Candidate {
 
 export interface Category {
   id: number;
-  name: string; 
+  name: string;
+  nameEn?: string;
+  nameAr?: string;
 }
 
 export interface Governorate {
   id: number;
   name: string;
+  nameAr?: string | null;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;

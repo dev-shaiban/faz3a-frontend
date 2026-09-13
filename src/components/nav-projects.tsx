@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sidebar"
 import { Link, usePathname } from "@/i18n/navigation"
 import { LucideIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 export function NavOperations({
   operations,
@@ -22,10 +23,11 @@ export function NavOperations({
 }) {
   const { isMobile } = useSidebar()
   const pathname = usePathname()
+  const t = useTranslations("Sidebar")
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Main Operations</SidebarGroupLabel>
+      <SidebarGroupLabel>{t("mainOperations")}</SidebarGroupLabel>
       <SidebarMenu>
         {operations.map((item) => {
           const isActive = pathname.includes(`/dashboard/${item.url}`)

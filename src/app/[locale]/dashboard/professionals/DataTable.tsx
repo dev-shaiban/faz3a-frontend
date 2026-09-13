@@ -21,6 +21,7 @@ import { LoadingComponent } from "@/components/table/loading-table";
 import { useProfessionalsColumns } from "./columns";
 import { Professional } from "@/types";
 import { useProfessionals } from "@/hooks/data/use-professionals";
+import { useTranslations } from "next-intl";
 
 type ProfessionalsDataTableProps = {
   searchQuery?: string;
@@ -37,6 +38,7 @@ export function ProfessionalsDataTable({
   const [sorting, setSorting] = useState<
     "name:asc" | "name:desc" | "createdAt:asc" | "createdAt:desc"
   >("createdAt:desc");
+  const t = useTranslations("Common");
 
   const { professionals, totalPages, isLoading, totalItems, isFetching } =
     useProfessionals({
@@ -64,9 +66,9 @@ export function ProfessionalsDataTable({
 
   const getNoResultsMessage = () => {
     if (searchQuery.trim()) {
-      return "No results found.";
+      return t("noResults");
     }
-    return "No data available.";
+    return t("noData");
   };
 
   return (

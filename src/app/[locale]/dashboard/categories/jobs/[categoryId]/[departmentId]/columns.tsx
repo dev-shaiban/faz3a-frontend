@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { DeleteConfirmationDialog } from "@/components/ui/delete-confirmation-dialog";
 import { handleDeleteApiError } from "@/lib/utils/form-error-handler";
 import EditJobPositionDialog from "./EditJobPositionDialog";
+import { useTranslations } from "next-intl";
 
 type UseJobPositionColumnsProps = {
   onSortChange?: (sort: string) => void;
@@ -30,6 +31,7 @@ const JobPositionActionsCell = ({ jobPosition, parentId }: { jobPosition: SubCat
   const [isEditOpen, setIsEditOpen] = React.useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = React.useState(false);
   const { mutate: deleteCategory, isPending } = useDeleteCategory(true, parentId, true);
+  const t = useTranslations("Table");
 
   const handleDelete = () => {
     deleteCategory(jobPosition.id, {
@@ -65,18 +67,18 @@ const JobPositionActionsCell = ({ jobPosition, parentId }: { jobPosition: SubCat
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuLabel>{t("Actions.label")}</DropdownMenuLabel>
           <DropdownMenuItem onClick={handleViewCandidates}>
-            View Candidates
+            {t("Columns.candidates")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setIsEditOpen(true)}>
-            Edit
+            {t("Actions.edit")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setIsDeleteOpen(true)}
             className="text-red-600"
           >
-            Delete
+            {t("Actions.delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -101,6 +103,8 @@ export const useJobPositionColumns = ({
   onSortChange,
   parentId,
 }: UseJobPositionColumnsProps) => {
+  const t = useTranslations("Table");
+  const tCommon = useTranslations("Common");
   const columns: ColumnDef<SubCategory>[] = [
     {
       id: "select",
@@ -123,11 +127,11 @@ export const useJobPositionColumns = ({
     },
     {
       accessorKey: "id",
-      header: "ID",
+      header: t("Columns.id"),
     },
     {
       accessorKey: "nameAr",
-      header: "Arabic Name",
+      header: t("Columns.arabicName"),
       cell: ({ row }) => {
         return <div className="font-medium">{row.getValue("nameAr")}</div>;
       },
@@ -145,15 +149,15 @@ export const useJobPositionColumns = ({
               column.toggleSorting(column.getIsSorted() === "asc");
             }}
           >
-            English Name
-            <ArrowUpDown className="ml-2 h-4 w-4" />
+            {t("Columns.englishName")}
+            <ArrowUpDown className="ml-2 h-4 w-4 rtl:rotate-180" />
           </Button>
         );
       },
     },
     {
       accessorKey: "_count",
-      header: "Candidates",
+      header: t("Columns.candidates"),
       cell: ({ row }) => {
         const count = row.original._count;
         return (
@@ -167,7 +171,7 @@ export const useJobPositionColumns = ({
     },
     {
       accessorKey: "isActive",
-      header: "Status",
+      header: t("Columns.status"),
       cell: ({ row }) => {
         const isActive = row.getValue("isActive");
         return (
@@ -178,14 +182,14 @@ export const useJobPositionColumns = ({
                 : "bg-red-100 text-red-800"
             }`}
           >
-            {isActive ? "Active" : "Inactive"}
+            {isActive ? tCommon("active") : tCommon("inactive")}
           </span>
         );
       },
     },
     {
       id: "actions",
-      header: "Actions",
+      header: t("Columns.actions"),
       cell: ({ row }) => <JobPositionActionsCell jobPosition={row.original} parentId={parentId} />,
     },
   ];

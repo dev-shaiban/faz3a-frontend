@@ -20,6 +20,7 @@ import { TablePagination } from "@/components/table/table-pagination";
 import { LoadingComponent } from "@/components/table/loading-table";
 import { useMainCategories } from "@/hooks/data/use-categories";
 import { useCategoryColumns } from "./columns";
+import { useTranslations } from "next-intl";
 
 type DataTableProps = {
   searchQuery?: string;
@@ -28,6 +29,7 @@ type DataTableProps = {
 
 export function DataTable({ searchQuery = "", typeFilter = "ALL" }: DataTableProps) {
   const router = useRouter();
+  const t = useTranslations("Common");
   const [pagination, setPagination] = useState({
     pageIndex: 0, // TanStack Table uses 0-based index
     pageSize: 10,
@@ -66,9 +68,9 @@ export function DataTable({ searchQuery = "", typeFilter = "ALL" }: DataTablePro
 
   const getNoResultsMessage = () => {
     if (searchQuery.trim()) {
-      return "No results found.";
+      return t("noResults");
     }
-    return "No data available.";
+    return t("noData");
   };
 
   return (

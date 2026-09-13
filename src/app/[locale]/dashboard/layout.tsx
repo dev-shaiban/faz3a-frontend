@@ -19,7 +19,7 @@ import { routing } from "@/i18n/routing";
 import React from "react";
 import { ModeToggle } from "@/components/mode-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 function generateBreadcrumbs(pathname: string) {
   // Remove locale prefix if present
@@ -35,8 +35,29 @@ function generateBreadcrumbs(pathname: string) {
   }));
 }
 
+const BREADCRUMB_KEYS = [
+  "dashboard",
+  "professionals",
+  "candidates",
+  "categories",
+  "governorates",
+  "jobs",
+  "overview",
+] as const;
+
+type BreadcrumbKey = (typeof BREADCRUMB_KEYS)[number];
+
+function isBreadcrumbKey(key: string): key is BreadcrumbKey {
+  return (BREADCRUMB_KEYS as readonly string[]).includes(key);
+}
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   const locale = useLocale();
+  const t = useTranslations("Breadcrumb");
+  const getBreadcrumbLabel = (item: { label: string; href: string }) => {
+    const key = item.href.split("/").filter(Boolean).pop() ?? "";
+    return isBreadcrumbKey(key) ? t(key) : item.label;
+  };
   const isRTL = locale === "ar";
   
   return (
@@ -57,7 +78,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <React.Fragment key={index}>
                     <BreadcrumbItem className="hidden md:block">
                       <Link href={item.href}>
-                        {item.label}
+                        {getBreadcrumbLabel(item)}
                       </Link>
                     </BreadcrumbItem>
                     {index < arr.length - 1 && (

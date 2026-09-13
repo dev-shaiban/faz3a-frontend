@@ -9,11 +9,14 @@ import { useParams } from "next/navigation";
 import { useCategory } from "@/hooks/data/use-categories";
 import { SubCategoriesDataTable } from "./DataTable";
 import { CreateSubCategoryDialog } from "./CreateSubCategoryDialog";
+import { useTranslations } from "next-intl";
 
 export default function SubCategoriesPage() {
   const params = useParams();
   const parentId = Number(params.id);
   const { data: category } = useCategory(parentId);
+  const t = useTranslations("Categories");
+  const tCommon = useTranslations("Common");
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -21,7 +24,7 @@ export default function SubCategoriesPage() {
     <>
       <header className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">
-          {category?.nameEn || "Subcategories"}
+          {category?.nameEn || t("subcategories")}
         </h1>
         <CreateSubCategoryDialog
           parentId={parentId}
@@ -29,7 +32,7 @@ export default function SubCategoriesPage() {
         >
           <Button>
             <Plus className="mr-2 h-4 w-4" />
-            Create New
+            {tCommon("createNew")}
           </Button>
         </CreateSubCategoryDialog>
       </header>
@@ -37,7 +40,7 @@ export default function SubCategoriesPage() {
       <div className="mt-6 space-y-4">
         <div className="flex items-center justify-between gap-4">
           <SearchInput
-            placeholder="Search subcategories..."
+            placeholder={t("searchSubcategories")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onClear={() => setSearchQuery("")}
